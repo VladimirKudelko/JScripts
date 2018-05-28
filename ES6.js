@@ -218,7 +218,7 @@ var isAdmin = true;
 var User = {
     name,
     isAdmin
-};
+}
 
 console.log( JSON.stringify(User) );
 
@@ -301,9 +301,6 @@ rabbit.walk();
 // метода – он привязан к своему объекту навсегда.
 
 */
-
-
-
 
 
 
@@ -709,50 +706,3 @@ export function sayHi() { // Обязательно с именем
 import {one, two} from './scripts/module';
 console.log( `${one} and ${two}` );
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* function isPolyndrom(str) {
-    let length = str.length;
-
-    if ( length % 2 === 0 || length % 2 === 1 ) {
-        String.prototype.every  = [].every;
-
-        return 
-            str.every(function(e, index) {
-                if ( e ===  str[length - index - 1]) {
-                    return true;
-                } else {
-                    return false;
-            }
-
-            if ( index === Math.floor(length / 2) )
-                return;
-        });
-    }
-
-}
-
-console.log( isPolyndrom('b') ); */ 

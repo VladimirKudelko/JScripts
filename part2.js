@@ -1,4 +1,4 @@
-// DOM - объектная модель документа, это дерево, иерархия
+/* // DOM - объектная модель документа, это дерево, иерархия
 // DOM нужен для того, чтобы манипулировать страницей
 document.body.style.backgroundColor = 'red';
 setTimeout(() => { 
@@ -245,27 +245,173 @@ function handler() {
     alert( 'Спасибо!' );
 }
 
-input.addEventListener("click", handler);
+//input.addEventListener("click", handler);
 // удаление требует ту же функцию
-input.removeEventListener("click", handler);
+//input.removeEventListener("click", handler);
+
+var textArea = document.getElementById('area');
+
+textArea.onmouseenter = function(e) {
+    textArea.focus(); // симитировали событие
+};
+
+textArea.onclick = function(e) {
+    this.value += 'click\n';
+};
+
+textArea.onmousedown = function(e) { 
+    this.value += 'mousedown\n';
+};
+
+textArea.onmouseup = function(e) {
+    this.value += 'mousedown\n';
+};
+ */
 
 
 
 
+// Объект события
+var element = document.getElementById('elem2');
+
+element.addEventListener('click', (event) => {
+    event = event || window.event; // кроссбраузерно
+
+    console.log( 
+        event.type + " на " + event.currentTarget, // тип события (click) и на ком сработал (input)
+        event.clientX + ":" + event.clientY //позиции курсора
+    );
+});
+// event - кроссбраузерная
+
+// Всплытие и погружение
+// Самый глубокий элемент, которое вызывает событие называется целевым
+
+// Отличия от this (=event.currentTarget):
+// 1. event.target – это исходный элемент, на котором произошло 
+// событие, в процессе всплытия он неизменен.
+// 2. this – это текущий элемент, до которого дошло всплытие,
+// на нём сейчас выполняется обработчик.
+
+// То есть стоит обработчик на форме: currentTarget - это форма
+// так как обработчик сработал на ней
+// target - самый глубокий элемент
+
+// Всплытие идет прямо наверх до html, потом document, window
+// вызывая все обработчики на своем пути, поэтому нужно оста-
+// новить всплытие. event.stopPropogation()
+// Для того, чтобы полностью остановить обработку,
+// event.stopImmediatePropagation()
+var table = document.getElementById('numTable'),
+    selectedTd;
+
+table.addEventListener('click', (event) => {
+    var purpose = event.target;
+
+    while (purpose != table) { // можно вместо table исп. this
+        if (purpose.tagName == 'TD') {
+            // нашли интересующий элемент
+            highLight(purpose);
+            return;
+        }
+        purpose = purpose.parentNode; // взяли родителя
+    }
+
+});
+
+function highLight(purpose) {
+    if (selectedTd)
+        selectedTd.classList.remove('highlight');
+
+    selectedTd = purpose;
+    selectedTd.classList.add('highlight');
+}
+
+// Делегирование заключается в том, что если у нас много элементов
+// на которое нужно повесить однотипные обработчики, то вместо
+// назначения обработчика каждому мы ставим один обработчик родителю
+// а целевой элемент получаем через event.target
+
+var list = document.getElementById('tree'),
+    selectedLi,
+    selectedList;
+
+list.addEventListener('mouseover', (event) => {
+    var target = event.target;
+
+    if (target.tagName == 'SPAN')
+        textBold(target);
+});
+
+list.addEventListener('mouseout', () => {
+    if (selectedLi) {
+        selectedLi.classList.remove('bold');
+    }
+});
+
+function textBold(target) {
+    if (selectedLi) {
+        selectedLi.classList.remove('bold');
+    }
+
+    selectedLi = target;
+    selectedLi.classList.add('bold');
+}
+
+list.addEventListener('click', (event) => {
+    var target = event.target;
+    
+    if (target.tagName == 'SPAN') {
+        target = target.parentNode;
+        showList(target);
+    }
+});
+
+function showList(target) {
+    var clases;
+
+    selectedList = target.children[1];
+
+    if (!selectedList)
+        return;
+
+    clases = selectedList.classList;
+    
+    if (clases == 'hide' && selectedList.tagName == 'UL') {
+        selectedList.classList.remove('hide');
+        return;
+    }
+
+    selectedList.classList.add('hide');
+        
+}
 
 
+// Прием проектирование "Поведение"(Behavior). Он состоит из даух частей:
+// 1. Элементу ставиться аттрибут, описывающий его поведение
+// 2. При помощи делегирование ставиться обработчик на документ, который ловит все клики 
+// и если элемент имеет нужный аттрибут, то производит нужное действие
+document.onclick = function(event) {
+    if ( !event.target.hasAttribute('data-counter') )
+        return;
+
+    var counter = event.target;
+
+    counter.innerHTML++;
+};
+
+// Действия браузера по умолчанию. Многие действия влекут за собой действие браузера (клик по ссылке инициирует переход по URL) и т.д.
+// Существуе 2 способа отменить стандартное поведение браузера:
+// 1. event.preventDefault()
+// 2. Если обработчик назначен через onсобытие, то можно return faulse
 
 
+// Генрация событий
+// Конструктор Event
+var event = new Event('click'),
+    butt  = document.getElementById('elButton');
 
+butt.dispatchEvent(event); // инициируем событие
 
-
-
-
-
-
-
-
-
-
-
-
+// isTrusted - проверка было ли симитировано событие скриптом
+// CustomEvent - для создание собственного события

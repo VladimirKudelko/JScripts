@@ -18,10 +18,10 @@ try {
     console.log( e.message );
 } finally {
     console.log( 'Finally' );
-}
-*/
+} */
 
-
+// Функции, оперирующие другими функциями — либо принимая их в качестве аргументов, либо возвращая их, 
+// называются функциями высшего порядка.
 
 
 
@@ -57,7 +57,6 @@ console.log( object );
 
 delete person.age; // Delete prop
 console.log( "age" in person );
- */
 
 
 
@@ -66,7 +65,8 @@ console.log( "age" in person );
 
 
 
-/* // This
+
+ // This
 var greet = function (greeting) {
     greeting = greeting || ".";
     return greeting + " hello " + this.name;
@@ -98,7 +98,7 @@ console.log( this ); // window
 // bind простосвязывает с каким-либо объектом, а call & apply вызывает функцию
 var bound = greet.bind(anotherPerson); // чтобы когда мы выхвали ф-ию this указывало на тот объект с которым оно связано
 console.log( bound( "Hello" ) ); // Он не изменяет исходную функцию, а возвращает новою
- */
+
 
 
 
@@ -113,7 +113,7 @@ console.log( bound( "Hello" ) ); // Он не изменяет исходную 
 
 
 // Аксессоры (ES5) и атрибуты свойств
-/* var person = {
+ var person = {
     name: "Vladimir",
     _age: 19,
 
@@ -128,11 +128,11 @@ console.log( bound( "Hello" ) ); // Он не изменяет исходную 
 person.age = 110; // 100
 console.log( person.age );
 
-/* 
-Каждое свойство кроме имени и значения имеет 3 атрибута
-- writable
-- enumerable
-- configurable 
+
+//Каждое свойство кроме имени и значения имеет 3 атрибута
+//- writable
+//- enumerable
+//- configurable 
 
 
 Object.defineProperty( person, "lastname", { // также можно изменять существующее свойства
@@ -153,7 +153,7 @@ Object.preventExtensions(person); // убирает расширяемость
 console.log( Object.isExtensible(person) );
 
 Object.freeze(person); // убирает расширяемость + только для чтения
- */
+ 
 
 
 
@@ -166,7 +166,7 @@ Object.freeze(person); // убирает расширяемость + тольк
 
 // Прототипы и наследование 
 // Все объектны являются ссылочным типом данных
-/* var str = "my string"; // хранит значение 
+var str = "my string"; // хранит значение 
 var obj = {x: 10}; // хранит ссылку
 
 var a = 10, b = 20;
@@ -252,7 +252,7 @@ newGreet.greet = function() {
 
 var somePerson = Object.create(newGreet);
 console.log( somePerson.greet("First", "Second", "Third") );
-  */
+*/
 
 
 
@@ -299,7 +299,7 @@ Person.prototype.toString = function() {
     return this.name; // переопределили уже существующий метод
 };
 
-var thirdPerson = new Person("Efr");
+var thirdPerson = new Person("Anton");
 console.log( thirdPerson.toString() );
 console.log( thirdPerson + " gandon" ); //тут тоже вызовется toString()
 console.log( [1, 2, 3, {name: "obj"}].toString() );
@@ -334,14 +334,14 @@ var getClassObject = function(obj) {
     return Object.prototype.toString.call(obj).slice(8, -1);
 }
 
-console.log( getClassObject( true ) ); */
+console.log( getClassObject( true ) ); 
 
 
 
 
 
 // Цепочки методов
-/* var string = "Sometimes the same is different", newString;
+ var string = "Sometimes the same is different", newString;
 
 newString = string
     .replace("is", "is not")
@@ -393,8 +393,8 @@ var object = {
 
 console.log( object.position );
 var newObj = object.update();
-console.log( newObj.position ); */
-
+console.log( newObj.position ); 
+*/
 
 
 
@@ -600,7 +600,7 @@ console.log( arr.every(function(e) {
     return e.length >= 4;
 }) );
 
-//some - тоже что every только тут хотя бы один элемент
+// some - тоже что every только тут хотя бы один элемент
 // соответсует условию
 console.log( arr.some(function(elem , index, array) {
     return array[index].indexOf('s');
@@ -620,8 +620,8 @@ console.log(reduced);
 console.log( arrNumbers.indexOf(20) ); // -1 если не нашелся элемент
 
 //LastIndexOf - для поиска последнего вхождения элемента
-console.log( arrNumbers.lastIndexOf(20) ); */
-
+console.log( arrNumbers.lastIndexOf(20) ); 
+*/
 
 
 
@@ -742,7 +742,7 @@ console.log( getRandom(-100, -50) );
 // java(script)? - эта группы необязательная часть 
 // java(?:script)? - тоже самое только без запоминания
 
-/* var pattern = new RegExp("\w+", "gim");
+ /*var pattern = new RegExp("\w+", "gim");
 // flags: g - global;
 //        i - ignore case
 //        m - multiline
@@ -1167,7 +1167,7 @@ setInterval(function() {
 // ООП. Внутренний и внешний интерфейс
 "use strict"
 
-/* function CoffeeMachine(power) {
+function CoffeeMachine(power) {
     this.waterAmount = 0; // свойства записанные через this - публичные
 
     var WATER_HEAT_CAPACITY = 4200;
@@ -1190,7 +1190,7 @@ setInterval(function() {
 var coffeeMachine = new CoffeeMachine(100);
 coffeeMachine.waterAmount = 200;
 
-coffeeMachine.run(); */
+coffeeMachine.run();
 
 
 
@@ -1599,7 +1599,7 @@ console.log( new Error().stack );
 // Ссылка __proto__ только одна
 
 //примесь
-var sayHiMixin = {
+/* var sayHiMixin = {
     sayHi: function() {
         console.log( 'Hi ' + this.name );
     },
@@ -1619,6 +1619,6 @@ for (var key in sayHiMixin) {
 
 var person = new User('Egor');
 person.sayHi();
-person.sayBye();
+person.sayBye(); */
 
 
